@@ -1,8 +1,27 @@
 #! /usr/bin/env python
 
 from setuptools import setup, Extension
+from distutils.command.build_ext import build_ext as build_ext_orig
 import importlib
 import os
+
+class CTypesExtension(Extension):
+    pass
+
+class build_ext(build_ext_orig):
+    def build_extension(self, ext):
+        self._ctypes = isinstance(ext, CTypesExtension)
+        return super().build_extension(ext)
+
+    def get_export_symbols(self, ext):
+        if self._ctypes:
+            return ext.export_symbols
+        return super().get_export_symbols(ext)
+
+    def get_ext_filename(self, ext_name):
+        if self._ctypes:
+            return ext_name + ".so"
+        return super().get_ext_filename(ext_name)
 
 # copied from kymatio's setup.py: https://github.com/kymatio/kymatio/blob/master/setup.py
 pyrtools_version_spec = importlib.util.spec_from_file_location('pyrtools_version',
@@ -31,7 +50,7 @@ setup(
                       'Pillow>=3.4',
                       'tqdm>=4.29',
                       'requests>=2.21'],
-    ext_modules=[Extension('pyrtools.pyramids.c.wrapConv',
+    ext_modules=[CTypesExtension('pyrtools.pyramids.c.wrapConv',
                            sources=['pyrtools/pyramids/c/convolve.c',
                                     'pyrtools/pyramids/c/edges.c',
                                     'pyrtools/pyramids/c/wrap.c',
@@ -39,5 +58,6 @@ setup(
                            depends=['pyrtools/pyramids/c/convolve.h',
                                     'pyrtools/pyramids/c/internal_pointOp.h'],
                            extra_compile_args=['-fPIC', '-shared'])],
+                cmdclass={"build_ext":build_ext},
     tests='TESTS',
     )
