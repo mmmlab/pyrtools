@@ -32,14 +32,18 @@ this implementation is differentiable.
 # Installation
 
 It's recommended you install from pip: `pip install pyrtools`. The pip
-install has been tested on Linux and on OSX. Windows is NOT supported
+install has been tested on Linux and on OSX. <strike>Windows is NOT supported
 because of issues with the C compiler (`gcc` isn't necessarily
 installed); if you have experience with C compilation on Windows,
 please open a pull request. It's possible that the way to fix this is
 to use Cython, ensuring that Cython is installed before attempting to
 run the pip command, and then adding: `from Cython.Build import
 cythonize` and wrapping the `ext_modules` in the `setup` call with
-`cythonize`, but I'm not sure.
+`cythonize`, but I'm not sure.</strike> 
+
+The version in this fork compiles and runs correctly under Windows,
+as long as you have a recent version of Microsoft's C/C++ compiler (MSVC) installed. 
+You can download it free [here](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false) as a part of Visual Studio Community Edition.
 
 If you wish to install from the main branch, it's still recommended
 to use pip, just run `pip install .` (or `pip install -e .` if you
