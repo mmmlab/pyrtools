@@ -41,9 +41,10 @@ run the pip command, and then adding: `from Cython.Build import
 cythonize` and wrapping the `ext_modules` in the `setup` call with
 `cythonize`, but I'm not sure.</strike> 
 
-The version in this fork compiles and runs correctly under Windows,
+The version in this fork (i.e., [mmmlab/pyrtools](https://github.com/mmmlab/pyrtools)) compiles and runs correctly under Windows,
 as long as you have a recent version of Microsoft's C/C++ compiler (MSVC) installed. 
 You can download it free [here](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false) as a part of Visual Studio Community Edition.
+When installing on Windows, you should use the instructions below for installing from the main branch.
 
 If you wish to install from the main branch, it's still recommended
 to use pip, just run `pip install .` (or `pip install -e .` if you
